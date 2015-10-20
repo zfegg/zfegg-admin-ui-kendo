@@ -1,0 +1,21 @@
+<div data-role="window"
+     data-modal="true"
+     data-actions="['Close']"
+     data-title="用户角色分配"
+     data-width="600"
+     data-height="350"
+     data-visible="true"
+     data-bind="center: onWindowClose, events: {close: onWindowClose}"
+        >
+    <div data-role="treeview"
+         data-checkboxes="true"
+         data-text-field="name"
+         data-bind="source: roles, visible: isVisible, events: {check: onCheckRole}"
+         data-messages='{
+         retry: "重试",
+    requestFailed: "读取错误.",
+    loading: "加载中..."
+    }'
+            ></div>
+
+</div>

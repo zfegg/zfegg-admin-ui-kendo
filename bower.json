@@ -1,0 +1,19 @@
+{
+  "name": "zfegg-admin-ui-kendo",
+  "version": "1.0.0",
+  "homepage": "http://github.com/zfegg",
+  "authors": [
+    "David Miller"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "index.html"
+  ],
+  "dependencies": {
+    "requirejs": "*",
+    "bootstrap": "~3.3.2",
+    "jquery": "~2.1.1"
+  }
+}
