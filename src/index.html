@@ -11,10 +11,11 @@
 
     <title>Admin Theme</title>
 
-    <!-- Bootstrap Core CSS -->
+    <!-- build:css styles/zfegg-admin-ui.min.css -->
     <link href="../libs/kendo/styles/kendo.common.min.css" rel="stylesheet"/>
     <link href="../libs/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet"/>
-    <link href="styles/admin.css" rel="stylesheet"/>
+    <link href="styles/zfegg-admin-ui.css" rel="stylesheet"/>
+    <!-- endbuild -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,20 +61,22 @@
     </div>
 </div>
 </body>
-<script src="../bower_components/requirejs/require.js"></script>
+
+<!-- build:js scripts/vendor.min.js -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../libs/kendo/js/kendo.web.min.js"></script>
+<script src="../bower_components/requirejs/require.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/app.min.js -->
+<script src="app/main.js"></script>
+<!-- endbuild -->
+
 <script>
 
+    (function () {
         requirejs.config({
-            baseUrl: 'app',
-            paths: {
-                "jquery": "../../bower_components/jquery/dist/jquery.min",
-                "kendo": "../../libs/kendo/js/kendo.web.min"
-            },
-            shim: {
-                'kendo': {
-                    deps: ['jquery']
-                }
-            }
+            baseUrl: 'app'
         });
 
         var modules = [
@@ -85,5 +88,7 @@
         require(modules, function(router) {
             router.start();
         });
+    })();
+
 </script>
 </html>

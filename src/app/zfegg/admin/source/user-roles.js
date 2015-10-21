@@ -17,7 +17,7 @@ define('zfegg/admin/source/user-roles',
                 transport: {
                     destroy: {
                         url: function (e) {
-                            return url + "/" + e['role_id'];
+                            return url + "/" + e.role_id;
                         }
                     }
                 },

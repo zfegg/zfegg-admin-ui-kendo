@@ -87,9 +87,9 @@ define('zfegg/admin/controller/role',
                     $tree.on('click', '.k-add', function () {
                         var node  = $(this).closest('.k-item'),
                             item = kTree.dataItem(node),
-                            name;
+                            name = window.prompt('请输入角色名');
 
-                        if (name = window.prompt('请输入角色名')) {
+                        if (name) {
                             roles.dataSource.add({name: name, parent_id: item.role_id});
                             roles.dataSource.sync().then(function () {
                                 var newItem = roles.dataSource.data().slice(-1)[0];

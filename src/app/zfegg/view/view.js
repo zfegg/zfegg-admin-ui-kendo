@@ -27,7 +27,7 @@ define('zfegg/view/view', ['jquery', 'kendo'], function($, kendo) {
             var view = new kendo.View(html, opts.renderOptions);
             var elem = view.render();
             self.kendoView = view;
-            onRender && onRender(elem, view);
+            if (onRender) onRender(elem, view);
         });
     };
 

@@ -129,7 +129,7 @@ define('zfegg/admin/source/role-resources',
                         item.methods.splice(item.methods.indexOf('PUT'), 1);
                     }
 
-                    if (item.methods.length == 0) {
+                    if (!item.methods.length) {
                         self.dataSource.remove(item);
                     } else {
                         item.set('methods', item.methods);
