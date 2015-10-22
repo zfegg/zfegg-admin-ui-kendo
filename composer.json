@@ -1,12 +1,6 @@
 {
     "name": "zfegg/zfegg-admin-ui-kendo",
     "description": "Zfegg admin ui module.",
-    "authors": [
-        {
-            "name": "xiemaomao",
-            "email": "xiemaomao@ztgame.com"
-        }
-    ],
     "require": {
         "php": ">=5.5",
         "rwoverdijk/assetmanager": "~1.3"
