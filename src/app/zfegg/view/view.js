@@ -20,15 +20,22 @@ define('zfegg/view/view', ['jquery', 'kendo'], function($, kendo) {
     };
 
     View.prototype.render = function (onRender) {
-        var opts = this.options;
-        var self = this;
+        var opts = this.options,
+            self = this,
+            callback =  function (html){
+                var view = new kendo.View(html, opts.renderOptions);
+                var elem = view.render();
+                self.kendoView = view;
+                if (onRender) onRender(elem, view);
+            };
 
-        $.get(opts.tmpl, function (html){
-            var view = new kendo.View(html, opts.renderOptions);
-            var elem = view.render();
-            self.kendoView = view;
-            if (onRender) onRender(elem, view);
-        });
+        if (window.templates && window.templates[opts.tmpl]) {
+            setTimeout(function () {
+                callback(window.templates[opts.tmpl]);
+            }, 0);
+        } else {
+            $.get(opts.tmpl, callback);
+        }
     };
 
     return View;
