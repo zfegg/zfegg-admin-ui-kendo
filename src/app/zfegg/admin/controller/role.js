@@ -1,7 +1,7 @@
 define('zfegg/admin/controller/role',
     [
         'require',
-        'zfegg/view/view',
+        'zfegg/model/view',
         'zfegg/config',
         '../source/roles',
         '../source/role-resources',

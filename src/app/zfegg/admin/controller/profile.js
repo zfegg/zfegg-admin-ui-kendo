@@ -2,7 +2,7 @@ define('zfegg/admin/controller/profile',
     [
         'require',
         'kendo',
-        'zfegg/view/view',
+        'zfegg/model/view',
         'zfegg/config',
         'zfegg/ui/notification'
     ],

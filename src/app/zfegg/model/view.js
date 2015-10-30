@@ -1,4 +1,4 @@
-define('zfegg/view/view', ['jquery', 'kendo'], function($, kendo) {
+define('zfegg/model/view', ['jquery', 'kendo'], function($, kendo) {
     var View = function (title, tmpl, renderOptions) {
         var defaults = {
             title: '',
@@ -19,14 +19,19 @@ define('zfegg/view/view', ['jquery', 'kendo'], function($, kendo) {
         this.title = this.options.title;
     };
 
-    View.prototype.render = function (onRender) {
+    View.prototype.render = function (elem, onRender) {
+        if (typeof elem == 'function') {
+            onRender = elem;
+            elem = undefined;
+        }
+
         var opts = this.options,
             self = this,
             callback =  function (html){
                 var view = new kendo.View(html, opts.renderOptions);
-                var elem = view.render();
+                var container = view.render(elem);
                 self.kendoView = view;
-                if (onRender) onRender(elem, view);
+                if (onRender) onRender(container, view);
             };
 
         if (window.templates && window.templates[opts.tmpl]) {

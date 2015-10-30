@@ -1,7 +1,7 @@
 define('zfegg/admin/controller/resource',
     [
         'require',
-        'zfegg/view/view',
+        'zfegg/model/view',
         'zfegg/config',
         '../source/resources'
     ],

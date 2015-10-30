@@ -27,15 +27,18 @@ module.exports = function (grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n' +
                 "'use strict';\n"
             },
-            dist: {
-                src: '<%=zfegg.src%>/app/**/*.js',
-                dest: '<%=zfegg.dist%>/scripts/app.min.js'
-            },
-
             //压缩 RequireJS
-            requirejs: {
-                src: 'bower_components/requirejs/require.js',
-                dest: 'bower_components/requirejs/require.min.js'
+            bower: {
+                files: [
+                    {
+                        src: 'bower_components/requirejs/require.js',
+                        dest: 'bower_components/requirejs/require.min.js'
+                    },
+                    {
+                        src: 'bower_components/js-cookie/src/js.cookie.js',
+                        dest: 'bower_components/js-cookie/src/js.cookie.min.js'
+                    }
+                ]
             }
         },
         copy: {
@@ -51,30 +54,49 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'libs/kendo/styles/',
                         src: 'Bootstrap/*',
-                        dest: '<%=zfegg.dist%>/styles/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'bower_components/bootstrap/dist/',
-                        src: ['{css,js}/*.min.*', 'fonts/*'],
-                        dest: '<%=zfegg.dist%>/bootstrap/'
-                    },
-                    {
-                        src: 'bower_components/jquery/dist/jquery.min.js',
-                        dest: '<%=zfegg.dist%>/scripts/jquery.min.js'
+                        dest: '<%=zfegg.dist%>/zfegg-admin-ui/styles/'
                     }
                 ]
             },
-            "usemin-tmp": {
-                src: '.tmp/concat/scripts/vendor.min.js',
-                dest: '<%=zfegg.dist%>/scripts/vendor.min.js'
-            },
+            kendo: {
+                src: 'libs\\kendo\\js\\kendo.web.min.js',
+                dest: '.tmp\\libs\\kendo\\js\\kendo.web.min.js'
+            }
         },
         useminPrepare: {
             html: '<%=zfegg.dist%>/*.html',
             options: {
                 dest: '<%=zfegg.dist%>',
-                root: '<%=zfegg.src%>'
+                root: '<%=zfegg.src%>',
+                flow: {
+                    html: {
+                        steps: {
+                            js: ['uglify', 'concat'],
+                            css: ['concat', 'cssmin']
+                        },
+                        post: {
+                            js: [{
+                                name: 'uglify',
+                                createConfig: function (context, block) {
+                                    var generated = context.options.generated;
+
+                                    if (block.dest.indexOf('scripts/vendor.min.js') > -1) {
+                                        generated.files = generated.files.filter(function (f) {
+                                            return f.dest.indexOf('kendo') == -1;
+                                        });
+                                    } else if (block.dest.indexOf('scripts/app.min.js') > -1) {
+                                        generated.files = generated.files.map(function (f) {
+                                            if (f.dest.indexOf('main.js') != -1) {
+                                                f.src = ['<%=zfegg.src%>/app/**/*.js'];
+                                            }
+                                            return f;
+                                        });
+                                    }
+                                }
+                            }]
+                        }
+                    }
+                }
             }
         },
         usemin: {
@@ -90,16 +112,6 @@ module.exports = function (grunt) {
         //    }
         //},
 
-        //css: ['libs/kendo/styles/{,**/}*.css', '<%= zfegg.dist%>/**/*.css'],
-        //concat: {
-        //    sample: {
-        //        options: {
-        //            banner: '/* xxxx */\n'   // '/* abcde */\n'
-        //        },
-        //        src: ['src/app/**/*.js'],  // [['foo/*.js', 'bar/*.js'], 'baz/*.js']
-        //        dest: '<%=zfegg.dist%>/xxx.js'      // 'build/abcde.js'
-        //    }
-        //}
         html2js: {
             options: {
                 //替换模板 "src/app" 为空;
@@ -110,15 +122,8 @@ module.exports = function (grunt) {
                 dest: '<%=zfegg.src%>/app/templates.js'
             }
         },
-        replace: {
-            //    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-            //<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-            //
+        debug: {
             login: {
-                options: {
-                    search: ['../bower_components/bootstrap/dist', '../bower_components/jquery/dist'],
-                    to: ['bootstrap', 'scripts']
-                },
                 files: {
                     src: '<%=zfegg.dist%>/login.html'
                 }
@@ -132,24 +137,27 @@ module.exports = function (grunt) {
         'copy:dist',
         'html2js',
         'useminPrepare',
-        'concat',
-        'copy:usemin-tmp',
-        //'uglify:generated',
+        'uglify:generated',
+        'copy:kendo',
+        //'debug',
+        'concat:generated',
         'cssmin:generated',
         //'filerev',
         'usemin',
-        'uglify:dist', //压缩app下所有js 覆盖文件usemin 生成的
-        'replace:login',
         'clean:usemin-tmp'
     ]);
 
 
-    grunt.registerMultiTask('replace', 'Replace paths.', function () {
+    grunt.registerMultiTask('debug', 'Debug.', function () {
 
         var options = this.options({
             search: null
         });
 
+        console.log(grunt.config('uglify').generated.files);
+        console.log(grunt.config('concat').generated.files);
+
+        return ;
         this.files.forEach(function (f) {
             f.src.forEach(function (filepath) {
                 if (!grunt.file.exists(filepath)) {
@@ -171,5 +179,4 @@ module.exports = function (grunt) {
             });
         });
     });
-
 };

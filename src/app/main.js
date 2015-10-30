@@ -4,3 +4,9 @@ define('jquery', function () {
 define('kendo', function () {
     return kendo;
 });
+define('cookie', function () {
+    return Cookies;
+});
+define('base64', function () {
+    return Base64;
+});

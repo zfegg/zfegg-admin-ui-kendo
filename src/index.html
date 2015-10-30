@@ -11,9 +11,9 @@
 
     <title>Admin Theme</title>
 
-    <base href="%BASE_HREF%">
+    <!--<base href="%BASE_HREF%">-->
 
-    <!-- build:css styles/zfegg-admin-ui.min.css -->
+    <!-- build:css zfegg-admin-ui/styles/zfegg-admin-ui.min.css -->
     <link href="../libs/kendo/styles/kendo.common.min.css" rel="stylesheet"/>
     <link href="../libs/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet"/>
     <link href="styles/zfegg-admin-ui.css" rel="stylesheet"/>
@@ -22,60 +22,87 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
-<body data-role="splitter"
-      data-orientation="vertical"
-      data-panes='[
+<body>
+<div id="zfegg-admin" class="zfegg-main" data-role="splitter"
+     data-orientation="vertical"
+     data-panes='[
 { collapsible: false, resizable: false, size: "60px"},
 { collapsible: false, resizable: false }
 ]'>
+    <div>
+        <div class="k-header" id="g-top">
 
-<div>
-    <div class="k-header" id="g-top">
-
+        </div>
     </div>
-</div>
-<div data-role="splitter"
-     data-panes='[
+    <div data-role="splitter"
+         data-panes='[
         { collapsible: false, resizable: false, size: "220px"},
         { collapsible: false }
     ]'
-     style="overflow: hidden">
-    <div data-role="panelbar">
-    </div>
-    <div>
-        <div data-role="tabstrip"
-             data-bind="events: { select: onSelectTabstrip }">
-            <ul>
-                <li class="k-state-active">信息</li>
-            </ul>
-            <div>
-                Welcome
-                <div id="treeview"></div>
+         style="overflow: hidden">
+        <div data-role="panelbar">
+        </div>
+        <div>
+            <div data-role="tabstrip"
+                 data-bind="events: { select: onSelectTabstrip }">
+                <ul>
+                    <li class="k-state-active">信息</li>
+                </ul>
+                <div>
+                    Welcome
+                    <div id="treeview"></div>
 
+                </div>
             </div>
         </div>
-        <div data-role="notification" id="notification" data-width="300"></div>
     </div>
 </div>
+
+<div id="zfegg-login" class="k-edit-form-container zfegg-login-form" data-bind="visible: isVisible" style="display: none;">
+    <h1>账号登录</h1>
+    <form data-bind="events: {submit: onSubmit}">
+        <div class="k-edit-label"><label>账号</label></div>
+        <div class="k-edit-field">
+            <input type="text" class="k-input k-textbox" name="username" required
+                   placeholder="请输入账号" data-required-msg="请输入账号"/>
+        </div>
+
+        <div class="k-edit-label"><label>密码</label></div>
+        <div data-container-for="password" class="k-edit-field">
+            <input type="password" class="k-input k-textbox" name="password" minlength="6" maxlength="20" required
+                   placeholder="请输入密码" data-required-msg="请输入密码"/>
+        </div>
+
+        <div class="k-edit-label"></div>
+        <div class="k-edit-field">
+            <button class="k-button k-button-icontext k-primary k-grid-update"><span class="k-icon k-update"></span>确认
+            </button>
+        </div>
+    </form>
+    <div class="clear"></div>
+</div>
+
+<div data-role="notification" id="notification" data-width="300"></div>
 </body>
 
-<!-- build:js scripts/vendor.min.js -->
+<!-- build:js zfegg-admin-ui/scripts/vendor.min.js -->
+<script src="../bower_components/js-cookie/src/js.cookie.js"></script>
+<script src="../bower_components/js-base64/base64.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../libs/kendo/js/kendo.web.min.js"></script>
-<script src="../bower_components/requirejs/require.min.js"></script>
+<script src="../bower_components/requirejs/require.js"></script>
 <!-- endbuild -->
 
-<!-- build:js scripts/app.min.js -->
+<!-- build:js zfegg-admin-ui/scripts/app.min.js -->
 <script src="app/main.js"></script>
 <!-- endbuild -->
 
 <script>
-
     (function () {
         requirejs.config({
             baseUrl: 'app'
@@ -88,10 +115,10 @@
         ];
 
         modules.unshift('zfegg/router');
-        require(modules, function(router) {
+        require(modules, function (router) {
             router.start();
         });
     })();
-
 </script>
+
 </html>

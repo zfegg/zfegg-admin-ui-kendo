@@ -1,7 +1,7 @@
 define('zfegg/admin/controller/user',
     [
         'require',
-        'zfegg/view/view',
+        'zfegg/model/view',
         'zfegg/config',
         'zfegg/kendo/restful-data-source',
         '../source/user-roles',
