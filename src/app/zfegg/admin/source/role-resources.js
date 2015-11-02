@@ -121,6 +121,10 @@ define('zfegg/admin/source/role-resources',
                     var name = resourceItem.resource + '::' + action;
                     var item = self.getByResource(name);
 
+                    if (!item) { //bug ?
+                        return ;
+                    }
+
                     item.methods.splice(item.methods.indexOf(resourceSub.method), 1);
 
                     if (resourceSub.method == 'PUT') {
@@ -135,10 +139,8 @@ define('zfegg/admin/source/role-resources',
                         item.set('methods', item.methods);
                     }
 
-                    console.log(item.methods);
                 });
             }
-            console.log(this);
         };
 
         Assigner.prototype.getByResource = function (resource) {
@@ -179,6 +181,13 @@ define('zfegg/admin/source/role-resources',
                     var data = resources.data().toJSON();
                     var assignedData = {};
 
+                    data = data.filter(function (x) {
+                        if (!x.methods) {
+                            return true;
+                        }
+                        return x.methods.length > 0
+                    });
+
                     $.map(data, function(x) {
 
                         var items = {};
@@ -201,7 +210,6 @@ define('zfegg/admin/source/role-resources',
                         return x;
                     });
 
-                    console.log(data);
                     callback(data);
                 });
             });
