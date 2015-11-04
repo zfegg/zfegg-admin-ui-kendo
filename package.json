@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/zfegg/zfegg-admin-ui-kendo/issues"
   },
-  "homepage": "https://github.com/zfegg/zfegg-admin-ui-kendo"
+  "homepage": "https://github.com/zfegg/zfegg-admin-ui-kendo",
+  "dependencies": {
+    "bower": "^1.6.5"
+  }
 }

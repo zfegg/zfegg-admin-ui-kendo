@@ -1,5 +1,6 @@
 define('zfegg/config', function() {
+
     return {
-        baseUrl: ''
+        baseUrl: document.getElementsByTagName('base')[0].href.replace(/\/+$/, '')
     };
 });

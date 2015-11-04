@@ -51,10 +51,17 @@ define('zfegg/ui/init',
                 loginModel.set('isVisible', false);
                 renderAdminView();
             }).bind('login.error', function (xhr) {
+                var msg = '登录错误';
+                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
+                    msg = xhr.responseJSON.detail;
+                } else {
+                    msg = xhr.status + ' ' + xhr.statusText;
+                }
+
                 $('<div></div>').kendoNotification({
                     appendTo: $login,
                     autoHideAfter: 1500
-                }).data('kendoNotification').error(xhr.responseJSON.detail || '登录错误');
+                }).data('kendoNotification').error(msg);
             });
 
             kendo.bind($login, loginModel);
@@ -65,12 +72,17 @@ define('zfegg/ui/init',
         $.ajaxSetup({
             error: function (xhr) {
                 console.log("error", xhr);
-                if (xhr.responseJSON) {
-                    require(['./notification'], function (notification) {
-                        console.log(notification);
-                        notification.error('<span>错误(' + xhr.status + '): ' + xhr.statusText + '</span><br />' + xhr.responseJSON.detail);
-                    });
+
+                var msg = '系统错误';
+                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
+                    msg = '<span>错误(' + xhr.status + '): ' + xhr.statusText + '</span><br />' + xhr.responseJSON.detail;
+                } else {
+                    msg = msg + ': ' + xhr.status + ' ' + xhr.statusText;
                 }
+
+                require(['./notification'], function (notification) {
+                    notification.error(msg);
+                });
             }
         });
 
