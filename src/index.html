@@ -11,7 +11,7 @@
 
     <title>Admin Theme</title>
 
-    <!--<base href="%BASE_HREF%">-->
+    <base href="%BASE_HREF%">
 
     <!-- build:css zfegg-admin-ui/styles/zfegg-admin-ui.min.css -->
     <link href="../libs/kendo/styles/kendo.common.min.css" rel="stylesheet"/>
@@ -113,6 +113,10 @@
             'zfegg/admin/init',
             /*%APP_MODULES%*/
         ];
+
+        if (document.getElementsByTagName('base')[0].href = '%BASE_HREF'+'%') {
+            document.getElementsByTagName('base')[0].href = '';
+        }
 
         modules.unshift('zfegg/router');
         require(modules, function (router) {
