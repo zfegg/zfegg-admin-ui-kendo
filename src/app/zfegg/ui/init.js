@@ -80,7 +80,7 @@ define('zfegg/ui/init',
                     msg = msg + ': ' + xhr.status + ' ' + xhr.statusText;
                 }
 
-                require(['./notification'], function (notification) {
+                require(['zfegg/ui/notification'], function (notification) {
                     notification.error(msg);
                 });
             }
