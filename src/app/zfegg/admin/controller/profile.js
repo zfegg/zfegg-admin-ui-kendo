@@ -14,9 +14,18 @@ define('zfegg/admin/controller/profile',
         var events = {
             onSubmit: function (e) {
                 e.preventDefault();
+                var info = $(e.target).serializeArray();
+                info = info.filter(function (o, i) {
+                    return o.value.length > 0
+                });
 
-                $.post(url, $(e.target).serialize(), function () {
-                    notification.success('修改成功');
+                $.ajax({
+                    type: 'PUT',
+                    url: url,
+                    data: info,
+                    success: function () {
+                        notification.success('修改成功');
+                    }
                 });
             },
             onConfirmPassword: function (e) {
