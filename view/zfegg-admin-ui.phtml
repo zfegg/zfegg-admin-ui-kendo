@@ -6,7 +6,22 @@ $basePath = $this->serverUrl(rtrim($this->basePath(), '/') . '/');
 $html = file_get_contents($path);
 $html = str_replace('%BASE_HREF%', $basePath, $html);
 if (isset($modules)) {
-    $html = str_replace('/*%APP_MODULES%*/', trim(json_encode($modules), '[]'), $html);
+    $appModules = []; $appPaths = [];
+    foreach ($modules as $key => $value) {
+        if (is_int($key)) {
+            $appModules[] = $value;
+        } else {
+            $appModules[] = $key;
+            $appPaths[] = $value;
+        }
+    }
+
+    $html = str_replace('/*%APP_MODULES%*/', trim(json_encode($appModules), '[]'), $html);
+    $html = str_replace('/*%APP_CONFIG%*/', json_encode(['paths' => $appPaths]), $html);
+}
+
+if (isset($uiConfigs)) {
+    $html = str_replace('/*%ZFEGG_CONFIG%*/', trim(json_encode((object)$uiConfigs), '{}'), $html);
 }
 
 echo $html;

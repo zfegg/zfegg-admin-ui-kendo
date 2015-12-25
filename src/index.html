@@ -105,8 +105,11 @@
 <script>
     (function () {
         requirejs.config({
-            baseUrl: 'app'
+            paths: {
+                zfegg: 'app/zfegg'
+            }
         });
+        requirejs.config(/*%APP_CONFIG%*/);
 
         var modules = [
             'zfegg/ui/init',
@@ -114,13 +117,17 @@
             /*%APP_MODULES%*/
         ];
 
+        var zfeggConfig = {/*%ZFEGG_CONFIG%*/};
+
         if (document.getElementsByTagName('base')[0].href = '%BASE_HREF'+'%') {
             document.getElementsByTagName('base')[0].href = '';
         }
 
+        modules.unshift('zfegg/config');
         modules.unshift('zfegg/router');
-        require(modules, function (router) {
+        require(modules, function (router, config) {
             router.start();
+            config = $.extend(config, zfeggConfig);
         });
     })();
 </script>
