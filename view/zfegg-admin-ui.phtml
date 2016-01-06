@@ -21,7 +21,7 @@ if (isset($modules)) {
 }
 
 if (isset($uiConfigs)) {
-    $html = str_replace('/*%ZFEGG_CONFIG%*/', trim(json_encode((object)$uiConfigs), '{}'), $html);
+    $html = str_replace('/*%ZFEGG_CONFIG%*/', sprintf('zfeggConfig = %s;', json_encode((object)$uiConfigs)), $html);
 }
 
 echo $html;

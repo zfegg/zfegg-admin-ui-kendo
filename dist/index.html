@@ -100,22 +100,24 @@
         requirejs.config(/*%APP_CONFIG%*/);
 
         var modules = [
+            'zfegg/router',
             'zfegg/ui/init',
             'zfegg/admin/init',
             /*%APP_MODULES%*/
         ];
 
-        var zfeggConfig = {/*%ZFEGG_CONFIG%*/};
+        var zfeggConfig = {};
+        /*%ZFEGG_CONFIG%*/
+        require(['zfegg/config'], function (config) {
+            config = $.extend(config, zfeggConfig);
+        });
 
         if (document.getElementsByTagName('base')[0].href = '%BASE_HREF'+'%') {
             document.getElementsByTagName('base')[0].href = '';
         }
 
-        modules.unshift('zfegg/config');
-        modules.unshift('zfegg/router');
-        require(modules, function (router, config) {
+        require(modules, function (router) {
             router.start();
-            config = $.extend(config, zfeggConfig);
         });
     })();
 </script>
