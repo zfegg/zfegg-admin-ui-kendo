@@ -11,8 +11,6 @@
 
     <title>Admin Theme</title>
 
-    <base href="%BASE_HREF%">
-
     <link rel="stylesheet" href="zfegg-admin-ui/styles/zfegg-admin-ui.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -97,27 +95,32 @@
                 zfegg: 'app/zfegg'
             }
         });
-        requirejs.config(/*%APP_CONFIG%*/);
 
-        var modules = [
-            'zfegg/router',
-            'zfegg/ui/init',
-            'zfegg/admin/init',
-            /*%APP_MODULES%*/
-        ];
-
-        var zfeggConfig = {};
+        var zfeggConfig = {
+            baseUrl: '/zfegg-admin-skeleton/public'
+        };
         /*%ZFEGG_CONFIG%*/
+
         require(['zfegg/config'], function (config) {
             config = $.extend(config, zfeggConfig);
-        });
 
-        if (document.getElementsByTagName('base')[0].href = '%BASE_HREF'+'%') {
-            document.getElementsByTagName('base')[0].href = '';
-        }
+            var modules = [
+                'zfegg/router',
+                'zfegg/ui/init',
+                'zfegg/admin/init'
+            ];
 
-        require(modules, function (router) {
-            router.start();
+            if (config.modules) {
+                modules.concat(config.modules);
+            }
+
+            if (config.requirejs_config) {
+                requirejs.config(config.requirejs_config);
+            }
+
+            require(modules, function (router) {
+                router.start();
+            });
         });
     })();
 </script>

@@ -4,24 +4,12 @@ $path    = __DIR__ . '/../dist/index.html';
 $basePath = $this->serverUrl(rtrim($this->basePath(), '/') . '/');
 
 $html = file_get_contents($path);
-$html = str_replace('%BASE_HREF%', $basePath, $html);
-if (isset($modules)) {
-    $appModules = []; $appPaths = [];
-    foreach ($modules as $key => $value) {
-        if (is_int($key)) {
-            $appModules[] = $value;
-        } else {
-            $appModules[] = $key;
-            $appPaths[] = $value;
-        }
+
+if (isset($configs)) {
+    if (!isset($configs['baseUrl'])) {
+        $configs['baseUrl'] = rtrim($this->url(), '/');
     }
-
-    $html = str_replace('/*%APP_MODULES%*/', trim(json_encode($appModules), '[]'), $html);
-    $html = str_replace('/*%APP_CONFIG%*/', json_encode(['paths' => $appPaths]), $html);
-}
-
-if (isset($uiConfigs)) {
-    $html = str_replace('/*%ZFEGG_CONFIG%*/', sprintf('zfeggConfig = %s;', json_encode((object)$uiConfigs)), $html);
+    $html = str_replace('/*%ZFEGG_CONFIG%*/', sprintf('zfeggConfig = %s;', json_encode((object)$configs)), $html);
 }
 
 echo $html;

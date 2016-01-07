@@ -92,6 +92,8 @@ define('zfegg/ui/init',
             renderAdminView();
         }
 
+        document.title = config.title;
+
         if (location.hash.length > 1) {
             location.hash = '';
         }
