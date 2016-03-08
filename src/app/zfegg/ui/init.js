@@ -30,7 +30,7 @@ define('zfegg/ui/init',
             //左侧菜单加载
             var url = config.baseUrl;
             $.get(url + "/profile/menus", function (items) {
-                $panel.data('kendoPanelBar').append(items);
+                $panel.data('kendoPanelBar').append(items._embedded.menus);
             });
         };
 
@@ -91,6 +91,8 @@ define('zfegg/ui/init',
         } else {
             renderAdminView();
         }
+
+        document.title = config.title;
 
         if (location.hash.length > 1) {
             location.hash = '';

@@ -4,9 +4,12 @@ $path    = __DIR__ . '/../dist/index.html';
 $basePath = $this->serverUrl(rtrim($this->basePath(), '/') . '/');
 
 $html = file_get_contents($path);
-$html = str_replace('%BASE_HREF%', $basePath, $html);
-if (isset($modules)) {
-    $html = str_replace('/*%APP_MODULES%*/', trim(json_encode($modules), '[]'), $html);
+
+if (isset($configs)) {
+    if (!isset($configs['baseUrl'])) {
+        $configs['baseUrl'] = rtrim($this->url(), '/');
+    }
+    $html = str_replace('/*%ZFEGG_CONFIG%*/', sprintf('zfeggConfig = %s;', json_encode((object)$configs)), $html);
 }
 
 echo $html;

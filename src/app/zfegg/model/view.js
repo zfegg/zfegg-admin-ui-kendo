@@ -34,9 +34,10 @@ define('zfegg/model/view', ['jquery', 'kendo'], function($, kendo) {
                 if (onRender) onRender(container, view);
             };
 
-        if (window.templates && window.templates[opts.tmpl]) {
+        var templateKey = opts.tmpl.replace(/^.\//, '');
+        if (window.templates && window.templates[templateKey]) {
             setTimeout(function () {
-                callback(window.templates[opts.tmpl]);
+                callback(window.templates[templateKey]);
             }, 0);
         } else {
             $.get(opts.tmpl, callback);
