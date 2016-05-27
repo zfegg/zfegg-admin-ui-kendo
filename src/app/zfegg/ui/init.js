@@ -7,11 +7,39 @@ define('zfegg/ui/init',
         'zfegg/config',
         'zfegg/router',
         './tabs',
-        '../service/oauth'
-    ], function (req, $, kendo, View, config, router, $tabs, oauth) {
+        '../service/oauth',
+        './view/login'
+    ], function (req, $, kendo, View, config, router, $tabs, oauth, LoginView) {
         'use strict';
 
-        var renderAdminView = function () {
+        router.route('/login', function () {
+            var view = new LoginView({
+                loginSubmit: function () {
+                    oauth.login({
+                        username: e.target.username.value,
+                        password: e.target.password.value
+                    });
+                }
+            });
+
+            oauth.bind('login.success', function () {
+                view.destroy();
+                router.navigate("/");
+            }).bind('login.error', function (xhr) {
+                var msg = '登录错误';
+                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
+                    msg = xhr.responseJSON.detail;
+                } else {
+                    msg = xhr.status + ' ' + xhr.statusText;
+                }
+
+                view.error(msg);
+            });
+
+            view.render(document.body);
+        });
+
+        router.route('/', function () {
             var $panel = $("body div[data-role=panelbar]");
             $tabs.push($("body [data-role=tabstrip]").get(0));
 
@@ -32,69 +60,8 @@ define('zfegg/ui/init',
             $.get(url + "/profile/menus", function (items) {
                 $panel.data('kendoPanelBar').append(items._embedded.menus);
             });
-        };
-
-        var renderLoginView = function () {
-            var $login = $('#zfegg-login');
-            var loginModel = kendo.observable({
-                isVisible: true,
-                onSubmit: function (e) {
-                    e.preventDefault();
-                    oauth.login({
-                        username: e.target.username.value,
-                        password: e.target.password.value
-                    });
-                    return false;
-                }
-            });
-            oauth.bind('login.success', function () {
-                loginModel.set('isVisible', false);
-                renderAdminView();
-            }).bind('login.error', function (xhr) {
-                var msg = '登录错误';
-                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
-                    msg = xhr.responseJSON.detail;
-                } else {
-                    msg = xhr.status + ' ' + xhr.statusText;
-                }
-
-                $('<div></div>').kendoNotification({
-                    appendTo: $login,
-                    autoHideAfter: 1500
-                }).data('kendoNotification').error(msg);
-            });
-
-            kendo.bind($login, loginModel);
-            $login.show();
-        };
-
-        //Ajax 网络状态监听
-        $.ajaxSetup({
-            error: function (xhr) {
-                console.log("error", xhr);
-
-                var msg = '系统错误';
-                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
-                    msg = '<span>错误(' + xhr.status + '): ' + xhr.statusText + '</span><br />' + xhr.responseJSON.detail;
-                } else {
-                    msg = msg + ': ' + xhr.status + ' ' + xhr.statusText;
-                }
-
-                require(['zfegg/ui/notification'], function (notification) {
-                    notification.error(msg);
-                });
-            }
         });
 
-        if (!oauth.isLogin()) {
-            renderLoginView();
-        } else {
-            renderAdminView();
-        }
-
+        router.navigate(oauth.isLogin() ? "/" : "/login");
         document.title = config.title;
-
-        if (location.hash.length > 1) {
-            location.hash = '';
-        }
     });

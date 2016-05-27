@@ -1,0 +1,23 @@
+<div class="k-edit-form-container zfegg-login-form">
+    <h1>账号登录</h1>
+    <form data-bind="events: {submit: onSubmit}">
+        <div class="k-edit-label"><label>账号</label></div>
+        <div class="k-edit-field">
+            <input type="text" class="k-input k-textbox" name="username" required
+                   placeholder="请输入账号" data-required-msg="请输入账号"/>
+        </div>
+
+        <div class="k-edit-label"><label>密码</label></div>
+        <div data-container-for="password" class="k-edit-field">
+            <input type="password" class="k-input k-textbox" name="password" minlength="6" maxlength="20" required
+                   placeholder="请输入密码" data-required-msg="请输入密码"/>
+        </div>
+
+        <div class="k-edit-label"></div>
+        <div class="k-edit-field">
+            <button class="k-button k-button-icontext k-primary k-grid-update"><span class="k-icon k-update"></span>确认
+            </button>
+        </div>
+    </form>
+    <div class="clear"></div>
+</div>

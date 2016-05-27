@@ -1,5 +1,7 @@
 define('zfegg/ui/notification', ['jquery', 'kendo'], function($) {
     'use strict';
 
-    return $('#notification').kendoNotification().data('kendoNotification');
+    var $view = $('<div data-width="300"></div>');
+    $view.appendTo(document.body);
+    return $view.kendoNotification().data('kendoNotification');
 });

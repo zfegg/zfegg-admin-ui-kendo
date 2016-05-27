@@ -9,19 +9,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cmd-concat": "~0.2.0",
-    "grunt-cmd-transport": "~0.2.0",
-    "grunt-common-html2js": "^0.3.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-cssmin": "^0.14.0",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-filerev": "^2.3.1",
-    "grunt-usemin": "^3.1.1",
-    "load-grunt-tasks": "^3.3.0"
+    "browserify": "^13.0.1",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^2.13.4",
+    "tsify": "^0.16.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "repository": {
     "type": "git",
@@ -32,6 +24,12 @@
   },
   "homepage": "https://github.com/zfegg/zfegg-admin-ui-kendo",
   "dependencies": {
-    "bower": "^1.6.5"
+    "admin-lte": "^2.3.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.4",
+    "js-base64": "^2.1.9",
+    "js-cookie": "^2.1.1",
+    "requirejs": "^2.2.0",
+    "text": "github:requirejs/text"
   }
 }
