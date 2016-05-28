@@ -1,0 +1,22 @@
+<!-- Menu toggle button -->
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-bell-o"></i>
+    <span class="label label-warning">#=data.length#</span>
+</a>
+<ul class="dropdown-menu">
+    <li class="header">You have #=data.length# notifications</li>
+    <li>
+        <!-- Inner Menu: contains the notifications -->
+        <ul class="menu">
+            #for (var i = 0; i < data.length; i++) { var item = data[i]; #
+            <li><!-- start notification -->
+                <a href="#">
+                    <i class="fa fa-#=item.type#"></i> #=item.content#
+                </a>
+            </li>
+            # } #
+            <!-- end notification -->
+        </ul>
+    </li>
+    <li class="footer"><a href="#">View all</a></li>
+</ul>

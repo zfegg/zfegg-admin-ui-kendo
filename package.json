@@ -9,11 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^13.0.1",
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^2.13.4",
-    "tsify": "^0.16.0",
-    "vinyl-source-stream": "^1.1.0"
+    "gulp": "^3.9.1"
   },
   "repository": {
     "type": "git",
@@ -26,9 +22,11 @@
   "dependencies": {
     "admin-lte": "^2.3.3",
     "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3",
     "jquery": "^2.2.4",
     "js-base64": "^2.1.9",
     "js-cookie": "^2.1.1",
+    "kendo-ui-core": "^2016.2.518",
     "requirejs": "^2.2.0",
     "text": "github:requirejs/text"
   }

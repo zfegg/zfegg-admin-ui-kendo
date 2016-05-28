@@ -1,11 +1,26 @@
 define('zfegg/config', function() {
 
     return {
-        baseUrl: '',
+        baseUrl: './data',
         oauth: {
             clientId: null,
             clientSecret: null
         },
-        title: 'Zfegg Admin'
+        title: 'Zfegg Admin',
+        plugins: [
+
+        ],
+        menus: [
+            {
+                url: "/test",
+                text: "Test",
+                items: [
+                    {
+                        url: "/test",
+                        text: "Test"
+                    }
+                ]
+            }
+        ]
     };
 });

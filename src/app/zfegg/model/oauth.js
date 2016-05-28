@@ -1,4 +1,4 @@
-define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies, Base64) {
+define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies) {
 
     var Events = function (obj) {
         this.obj = obj;
@@ -21,7 +21,7 @@ define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies,
         });
     };
 
-    var Auth = function (path, clientId, clientSecret, key) {
+    var OAuth = function (path, clientId, clientSecret, key) {
 
         this.KEY = key || 'zfegg_oauth';
         this.KEY_PASSWORD = this.KEY + '_password';
@@ -34,11 +34,11 @@ define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies,
         this.isLogin() && this._setLoginSuccess();
     };
 
-    Auth.prototype.isLogin = function () {
+    OAuth.prototype.isLogin = function () {
         return Boolean(Cookies.getJSON(this.KEY_PASSWORD));
     };
 
-    Auth.prototype._setLoginSuccess = function (result) {
+    OAuth.prototype._setLoginSuccess = function (result) {
         if (result) {
             var params = {};
             if (result.expires_in) {
@@ -58,7 +58,7 @@ define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies,
 
     var loginLocked = false;
 
-    Auth.prototype.login = function (params, ajaxParams) {
+    OAuth.prototype.login = function (params, ajaxParams) {
         var self = this;
 
         if (loginLocked) {
@@ -90,33 +90,33 @@ define('zfegg/model/oauth', ['jquery', 'cookie', 'base64'], function($, Cookies,
         return this.event;
     };
 
-    Auth.prototype.getBearer = function () {
+    OAuth.prototype.getBearer = function () {
         if (!this.isLogin()) {
             throw new Error('Please login.');
         }
         return 'Bearer ' + Cookies.getJSON(this.KEY_PASSWORD).access_token;
     };
 
-    Auth.prototype.getBasic = function () {
+    OAuth.prototype.getBasic = function () {
         return 'Basic ' + Base64.encode(this.clientId + ':' + this.clientSecret);
     };
 
-    Auth.prototype.bind = function () {
+    OAuth.prototype.bind = function () {
         var args = Array.prototype.slice.call(arguments);
         this.event.bind.apply(this.event, args);
         return this;
     };
 
-    Auth.prototype.trigger = function () {
+    OAuth.prototype.trigger = function () {
         var args = Array.prototype.slice.call(arguments);
         this.event.trigger.apply(this.event, args);
         return this;
     };
 
-    Auth.prototype.logout = function () {
+    OAuth.prototype.logout = function () {
         Cookies.set(this.KEY_PASSWORD, null, {expires: 0});
         delete $.ajaxSettings.headers.Authorization;
     };
 
-    return Auth;
+    return OAuth;
 });
