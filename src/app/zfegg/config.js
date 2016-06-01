@@ -9,18 +9,6 @@ define('zfegg/config', function() {
         title: 'Zfegg Admin',
         plugins: [
 
-        ],
-        menus: [
-            {
-                url: "/test",
-                text: "Test",
-                items: [
-                    {
-                        url: "/test",
-                        text: "Test"
-                    }
-                ]
-            }
         ]
     };
 });

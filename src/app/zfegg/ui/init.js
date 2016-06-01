@@ -5,9 +5,8 @@ define('zfegg/ui/init',
         'zfegg/config',
         'zfegg/router',
         '../service/oauth',
-        './view/login',
-        './view/layout'
-    ], function ($, kendo, config, router, oauth, LoginView, LayoutView) {
+        './view/login'
+    ], function ($, kendo, config, router, oauth, LoginView) {
         'use strict';
 
         router.route('/login', function () {
@@ -38,17 +37,19 @@ define('zfegg/ui/init',
         });
 
         router.route('/', function () {
-            if (!oauth.isLogin()) {
-                router.navigate("/login");
+            require(['zfegg/ui/controller/layout'], function (LayoutCtrl) {
+                LayoutCtrl.home();
+            });
+        });
 
+        router.bind("change", function(e) {
+            if (e.url == '/login') {
                 return ;
             }
-            var layout = new LayoutView({
-                model: {
-                    menus: config.menus,
-                }
-            });
-            layout.render(document.body);
+            if (!oauth.isLogin()) {
+                e.preventDefault();
+                router.replace("/login");
+            }
         });
 
         router.start();

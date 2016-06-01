@@ -10,12 +10,7 @@ define('zfegg/ui/widget/base-menu', ['kendo'], function (kendo) {
 
                 that.element.addClass(config.class);
                 that.template = kendo.template(config.tpl);
-
-                that.dataSource = kendo.data.DataSource.create(options.dataSource || []);
-                that.dataSource.bind("change", function() {
-                    that.refresh();
-                });
-                that.dataSource.fetch();
+                that._dataSource();
             },
             options: {
                 name: config.name
@@ -26,6 +21,19 @@ define('zfegg/ui/widget/base-menu', ['kendo'], function (kendo) {
                     html = that.template({data: view});
 
                 that.element.html(html);
+            },
+            setDataSource: function (dataSource) {
+                this.options.dataSource = dataSource;
+                this._dataSource();
+            },
+            _dataSource: function() {
+                var that = this;
+                that.dataSource = kendo.data.DataSource.create(that.options.dataSource);
+
+                that.dataSource.bind("change", function() {
+                    that.refresh();
+                });
+                that.dataSource.fetch();
             }
         });
 

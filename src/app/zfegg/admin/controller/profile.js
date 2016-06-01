@@ -4,10 +4,10 @@ define('zfegg/admin/controller/profile',
         'kendo',
         'zfegg/model/view',
         'zfegg/config',
-        'zfegg/ui/notification',
-        'text!./profile.html'
+        'text!./profile.html',
+        'zfegg/ui/controller/layout'
     ],
-    function (req, kendo, View, config, notification, tpl) {
+    function (req, kendo, View, config, tpl, layout) {
         'use strict';
 
         var url = config.baseUrl + '/profile/index';
@@ -25,7 +25,7 @@ define('zfegg/admin/controller/profile',
                     url: url,
                     data: info,
                     success: function () {
-                        notification.success('修改成功');
+                        layout.notification.success('修改成功');
                     }
                 });
             },
@@ -38,24 +38,27 @@ define('zfegg/admin/controller/profile',
                 }
             }
         };
-        return {
-            title: '个人信息',
-            view: new kendo.View(tpl,
-                {
-                    model: {
-                        onSubmit: function (e) {
-                            e.preventDefault();
-                        }
-                    },
-                    init: function (e) {
-                        var self = this;
-                        $.get(url, function (result) {
-                            kendo.bind(self.element, $.extend(result, events));
-                        });
+
+        var view = new kendo.View(tpl,
+            {
+                model: {
+                    onSubmit: function (e) {
+                        e.preventDefault();
                     }
+                },
+                init: function (e) {
+                    var self = this;
+                    $.get(url, function (result) {
+                        kendo.bind(self.element, $.extend(result, events));
+                    });
                 }
-            )
-        };
+            }
+        );
+
+        layout.view.renderContent({
+            title: '个人信息',
+            content: view.render()
+        });
     });
 
 
