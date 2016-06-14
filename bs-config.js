@@ -11,5 +11,6 @@ module.exports = {
                 next();
             }
         }
-    }
+    },
+    "files": ["./src/**/*.{html,htm,css,js}"],
 };

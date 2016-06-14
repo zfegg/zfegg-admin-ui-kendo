@@ -1,23 +1,37 @@
 ({
-    name: "main",
-    appDir: "src",
-    baseUrl: "app",
+    appDir: './src',
+    mainConfigFile: './src/scripts/vendor.js',
+    baseUrl: "./scripts",
     dir: "scripts-build",
-    paths: {
-        jquery: '../../node_modules/jquery/dist/jquery',
-        kendo: '../../libs/kendo/js/kendo.web.min',
-        base64: '../../node_modules/js-base64/base64',
-        cookie: '../../node_modules/js-cookie/src/js.cookie',
-        bootstrap: '../../node_modules/bootstrap/dist/js/bootstrap.min',
-        'admin-lte': '../../node_modules/admin-lte/dist/js/app.min',
-        text: '../../node_modules/text/text'
-    },
-    shim: {
-        'admin-lte': {
-            deps:['jquery', 'bootstrap']
+    modules: [
+        {
+            name: 'vendor',
+            include: ['jquery',
+                'base64',
+                'cookie',
+                'bootstrap',
+                'admin-lte',
+                'text',
+                'requirejs'
+            ]
         },
-        bootstrap: {
-            deps:['jquery']
-        }
-    }
+        //
+        //{
+        //    name: 'zfegg/app',
+        //    include: [],
+        //    exclude: ['./vendor',
+        //        'kendo',
+        //        'jquery',
+        //        'base64',
+        //        'cookie',
+        //        'bootstrap',
+        //        'admin-lte',
+        //        'text']
+        //}
+    ],
+    onModuleBundleComplete: function (data) {
+        console.log(data);
+    },
+    fileExclusionRegExp: /(index-dev.html)/,
+    removeCombined: true
 });
