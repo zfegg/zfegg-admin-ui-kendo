@@ -1,3 +1,2 @@
 define(['./ui/init'], function () {
-
 });

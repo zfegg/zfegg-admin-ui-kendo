@@ -8,7 +8,7 @@ requirejs.config({
         cookie: '../../node_modules/js-cookie/src/js.cookie',
         bootstrap: '../../node_modules/bootstrap/dist/js/bootstrap.min',
         'admin-lte': '../../node_modules/admin-lte/dist/js/app.min',
-        text: '../../node_modules/text/text'
+        text: '../../node_modules/text/text',
     },
     shim: {
         'admin-lte': {

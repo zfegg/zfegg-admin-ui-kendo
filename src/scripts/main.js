@@ -1,3 +1,3 @@
-requirejs(['config'], function (common) {
+requirejs(['config'], function () {
     requirejs(['zfegg/app']);
 });

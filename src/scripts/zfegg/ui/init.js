@@ -5,8 +5,9 @@ define([
         'zfegg/router',
         '../service/oauth',
         './view/login',
+        './controller/layout',
         'admin-lte'
-    ], function ($, kendo, config, router, oauth, LoginView) {
+    ], function ($, kendo, config, router, oauth, LoginView, LayoutCtrl) {
         'use strict';
 
         router.route('/login', function () {
@@ -37,9 +38,7 @@ define([
         });
 
         router.route('/', function () {
-            require(['zfegg/ui/controller/layout'], function (LayoutCtrl) {
-                LayoutCtrl.home();
-            });
+            LayoutCtrl.home();
         });
 
         router.bind("change", function(e) {

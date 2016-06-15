@@ -1,128 +1,44 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-
+<html>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>AdminLTE 2 | Starter</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>Admin Theme</title>
-
-    <link rel="stylesheet" href="zfegg-admin-ui/styles/zfegg-admin-ui.min.css">
+    <link rel="stylesheet" href="assets/zfegg-admin-ui/css/app.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
-<body>
-<div id="zfegg-admin" class="zfegg-main" data-role="splitter"
-     data-orientation="vertical"
-     data-panes='[
-{ collapsible: false, resizable: false, size: "60px"},
-{ collapsible: false, resizable: false }
-]'>
-    <div>
-        <div class="k-header" id="g-top">
-
-        </div>
-    </div>
-    <div data-role="splitter"
-         data-panes='[
-        { collapsible: false, resizable: false, size: "220px"},
-        { collapsible: false }
-    ]'
-         style="overflow: hidden">
-        <div data-role="panelbar">
-        </div>
-        <div>
-            <div data-role="tabstrip"
-                 data-bind="events: { select: onSelectTabstrip }">
-                <ul>
-                    <li class="k-state-active">信息</li>
-                </ul>
-                <div>
-                    Welcome
-                    <div id="treeview"></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="zfegg-login" class="k-edit-form-container zfegg-login-form" data-bind="visible: isVisible" style="display: none;">
-    <h1>账号登录</h1>
-    <form data-bind="events: {submit: onSubmit}">
-        <div class="k-edit-label"><label>账号</label></div>
-        <div class="k-edit-field">
-            <input type="text" class="k-input k-textbox" name="username" required
-                   placeholder="请输入账号" data-required-msg="请输入账号"/>
-        </div>
-
-        <div class="k-edit-label"><label>密码</label></div>
-        <div data-container-for="password" class="k-edit-field">
-            <input type="password" class="k-input k-textbox" name="password" minlength="6" maxlength="20" required
-                   placeholder="请输入密码" data-required-msg="请输入密码"/>
-        </div>
-
-        <div class="k-edit-label"></div>
-        <div class="k-edit-field">
-            <button class="k-button k-button-icontext k-primary k-grid-update"><span class="k-icon k-update"></span>确认
-            </button>
-        </div>
-    </form>
-    <div class="clear"></div>
-</div>
-
-<div data-role="notification" id="notification" data-width="300"></div>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
 </body>
-
-<script src="zfegg-admin-ui/scripts/vendor.min.js"></script>
-
-<script src="zfegg-admin-ui/scripts/app.min.js"></script>
-
-<script>
-    (function () {
-        requirejs.config({
-            paths: {
-                zfegg: 'app/zfegg'
-            }
-        });
-
-        var zfeggConfig = {
-            baseUrl: '/zfegg-admin-skeleton/public'
-        };
-        /*%ZFEGG_CONFIG%*/
-
-        require(['zfegg/config'], function (config) {
-            config = $.extend(config, zfeggConfig);
-
-            var modules = [
-                'zfegg/router',
-                'zfegg/ui/init',
-                'zfegg/admin/init'
-            ];
-
-            if (config.modules) {
-                modules.concat(config.modules);
-            }
-
-            if (config.requirejs_config) {
-                requirejs.config(config.requirejs_config);
-            }
-
-            require(modules, function (router) {
-                router.start();
-            });
-        });
-    })();
-</script>
-
+<script src="assets/zfegg-admin-ui/jquery.min.js"></script>
+<script src="assets/zfegg-admin-ui/kendo.web.min.js"></script>
+<script src="assets/zfegg-admin-ui/app.min.js"></script>
 </html>

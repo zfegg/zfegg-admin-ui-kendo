@@ -1,32 +1,29 @@
 ({
     appDir: './src',
-    mainConfigFile: './src/scripts/vendor.js',
+    mainConfigFile: './src/scripts/config.js',
     baseUrl: "./scripts",
     dir: "scripts-build",
     modules: [
         {
-            name: 'vendor',
-            include: ['jquery',
+            name: 'config',
+            include: [
                 'base64',
                 'cookie',
-                'bootstrap',
-                'admin-lte',
-                'text',
-                'requirejs'
             ]
         },
         //
         //{
         //    name: 'zfegg/app',
         //    include: [],
-        //    exclude: ['./vendor',
+        //    exclude: ['./config',
         //        'kendo',
         //        'jquery',
         //        'base64',
         //        'cookie',
         //        'bootstrap',
         //        'admin-lte',
-        //        'text']
+        //        'text'
+        //    ]
         //}
     ],
     onModuleBundleComplete: function (data) {

@@ -4,7 +4,7 @@
   "description": "KendoUI Admin",
   "main": "Gruntfile.js",
   "scripts": {
-    "lite":"lite-server"
+    "lite": "lite-server"
   },
   "author": "",
   "license": "ISC",
@@ -12,10 +12,11 @@
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^2.0.10",
     "gulp-concat": "^2.6.0",
-    "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",
-    "gulp-requirejs-optimize": "^1.0.0"
+    "gulp-requirejs-optimize": "^1.0.0",
+    "run-sequence": "^1.2.1"
   },
   "repository": {
     "type": "git",
