@@ -30,7 +30,10 @@ define([
         document.title = config.title;
 
         App.router.route('/', function () {
-            //App.layout.home();
+        });
+
+        App.router.route('/test', function () {
+            console.log(';test');
         });
 
         router.route('/login', function () {
@@ -67,7 +70,9 @@ define([
             if (!oauth.isLogin()) {
                 e.preventDefault();
                 router.replace("/login");
+            } else {
+                App.initLayout();
             }
         });
     };
-    });
+});

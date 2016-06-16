@@ -42,6 +42,9 @@ desired effect
 <script src="assets/zfegg-admin-ui/kendo.web.min.js"></script>
 <script src="assets/zfegg-admin-ui/app.min.js"></script>
 <script>
+    requirejs.config({
+        baseUrl: './assets',
+    });
     require(['zfegg/app', 'kendo'], function (Application, kendo) {
         var App = new Application({
             renderElement: document.body,
@@ -53,9 +56,8 @@ desired effect
                 }
             })
         });
-        App.loadModules(
-
-        );
+        App.run();
+        window.App = App;
     });
 </script>
 </html>

@@ -1,26 +1,53 @@
 define(['require', 'kendo', 'jquery', './ui/view/layout', './router', './ui/init'], function (require, kendo, $, LayoutView, router) {
-    var Application = kendo.Class.extend({
-        init: function (options) {
-            this.router = router;
-            this.layout = new LayoutView({
-                model: {
-                    menus: options.menusDataSource
-                }
-            });
+   var Application = kendo.Observable.extend({
+       layout: null,
+       modules: ['zfegg/ui/init'],
+       options: {
+           menusDataSource: [],
+           renderElement: document.body
+       },
+       init: function (options) {
+           var self = this;
 
-            this.layout.render(options.renderElement);
+           kendo.Observable.fn.init.call(this);
+           this.options = $.extend(this.options, options);
+           this.router = router;
+           this.bind('route', function () {
+              self.router.start();
+           });
+       },
+       addModules: function (modules) {
+           this.modules = this.modules.concat(modules);
+       },
+       initLayout: function () {
+           if (this.layout) {
+               return this.layout;
+           }
 
-            require('zfegg/ui/init');
-        },
-        loadModules: function (modules) {
-            var self = this;
-            $.each(modules || [], function (module) {
-                require(module, function (call) {
-                    call && call(self);
-                });
-            });
-        }
-    });
+           this.layout = new LayoutView({
+               model: {
+                   menus: this.options.menusDataSource
+               }
+           });
 
-    return Application;
+           this.layout.render(this.options.renderElement);
+       },
+       run: function () {
+           var self = this,
+               loaded = [];
+
+           $.each(self.modules, function (i, module) {
+               require([module], function (call) {
+                   call && call(self);
+
+                   loaded.push(module);
+                   if (loaded.length == self.modules.length) {
+                       self.trigger('route');
+                   }
+               });
+           });
+       }
+   });
+
+   return Application;
 });

@@ -46,6 +46,8 @@ gulp.task("optimize-app", function () {
                 'admin-lte',
                 'text',
                 'zfegg/app',
+                'zfegg/kendo/binder-window-center',
+                'zfegg/kendo/restful-data-source',
             ],
             //insertRequire: ['zfegg/app'],
             exclude: [
