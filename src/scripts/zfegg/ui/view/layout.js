@@ -6,6 +6,9 @@ define('zfegg/ui/view/layout', ['text!./layout.html', 'jquery', 'kendo', '../wid
                 model: {
                     menus: []
                 },
+                init: function () {
+                    $(document.body).resize();
+                },
                 evalTemplate: true
             }, options);
 

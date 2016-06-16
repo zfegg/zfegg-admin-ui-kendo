@@ -5,10 +5,33 @@ define([
         'zfegg/router',
         '../service/oauth',
         './view/login',
-        './controller/layout',
         'admin-lte'
-    ], function ($, kendo, config, router, oauth, LoginView, LayoutCtrl) {
-        'use strict';
+    ], function ($, kendo, config, router, oauth, LoginView) {
+    'use strict';
+
+    //Ajax 网络状态监听
+    $.ajaxSetup({
+        error: function (xhr) {
+            var msg = '系统错误';
+            if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
+                msg = '<span>错误(' + xhr.status + '): ' + xhr.statusText + '</span><br />' + xhr.responseJSON.detail;
+            } else {
+                msg = msg + ': ' + xhr.status + ' ' + xhr.statusText;
+            }
+
+            require(['zfegg/ui/notification'], function (notification) {
+                notification.error(msg);
+            });
+        }
+    });
+
+    return function (App) {
+
+        document.title = config.title;
+
+        App.router.route('/', function () {
+            //App.layout.home();
+        });
 
         router.route('/login', function () {
             var view = new LoginView({
@@ -37,10 +60,6 @@ define([
             view.render(document.body);
         });
 
-        router.route('/', function () {
-            LayoutCtrl.home();
-        });
-
         router.bind("change", function(e) {
             if (e.url == '/login') {
                 return ;
@@ -50,23 +69,5 @@ define([
                 router.replace("/login");
             }
         });
-
-        router.start();
-        document.title = config.title;
-
-        //Ajax 网络状态监听
-        $.ajaxSetup({
-            error: function (xhr) {
-                var msg = '系统错误';
-                if (/application\/[\w\+]*json/.test(xhr.getResponseHeader('Content-Type')) && xhr.responseJSON && xhr.responseJSON.detail) {
-                    msg = '<span>错误(' + xhr.status + '): ' + xhr.statusText + '</span><br />' + xhr.responseJSON.detail;
-                } else {
-                    msg = msg + ': ' + xhr.status + ' ' + xhr.statusText;
-                }
-
-                require(['zfegg/ui/notification'], function (notification) {
-                    notification.error(msg);
-                });
-            }
-        });
+    };
     });

@@ -1,7 +1,11 @@
 define(['kendo', './ui/view/login'], function(kendo) {
-    return new kendo.Router({
+    var router = new kendo.Router({
         routeMissing: function(e) {
             this.replace('/');
         }
     });
+
+    router.start();
+
+    return router;
 });

@@ -47,7 +47,7 @@ gulp.task("optimize-app", function () {
                 'text',
                 'zfegg/app',
             ],
-            insertRequire: ['zfegg/app'],
+            //insertRequire: ['zfegg/app'],
             exclude: [
                 'kendo',
                 'jquery',
@@ -78,12 +78,6 @@ gulp.task("optimize-vendor", function () {
     //    }, amdConfig)))
     //    .pipe(rename('vendor.min.js'))
     //    .pipe(gulp.dest(paths.distAssets));
-});
-
-gulp.task("copy-html", function () {
-    return gulp.src('src/index-prod.html')
-        .pipe(rename('index.html'))
-        .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task("clean", function () {
@@ -124,10 +118,12 @@ gulp.task("resources", function () {
         'src/data/*',
     ]).pipe(gulp.dest(paths.dist + '/data'));
 
+    gulp.src('src/index-prod.html')
+        .pipe(rename('index.html'))
+        .pipe(gulp.dest(paths.dist));
     return;
 });
 
-
 gulp.task("default", function () {
-    runSequence("clean", "copy-html", "optimize-app", "optimize-vendor", "resources");
+    runSequence("clean", "optimize-app", "optimize-vendor", "resources");
 });

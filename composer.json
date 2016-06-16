@@ -5,5 +5,8 @@
         "classmap": [
             "Module.php"
         ]
+    },
+    "suggest" : {
+        "rwoverdijk/assetmanager": "Asset manager"
     }
 }

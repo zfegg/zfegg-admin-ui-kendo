@@ -41,4 +41,21 @@ desired effect
 <script src="assets/zfegg-admin-ui/jquery.min.js"></script>
 <script src="assets/zfegg-admin-ui/kendo.web.min.js"></script>
 <script src="assets/zfegg-admin-ui/app.min.js"></script>
+<script>
+    require(['zfegg/app', 'kendo'], function (Application, kendo) {
+        var App = new Application({
+            renderElement: document.body,
+            menusDataSource: new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: './data/menus.json'
+                    }
+                }
+            })
+        });
+        App.loadModules(
+
+        );
+    });
+</script>
 </html>
