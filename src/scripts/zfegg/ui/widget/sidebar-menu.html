@@ -3,7 +3,7 @@
 
 # for (var i = 0; i < data.length; i ++)  { var menu = data[i];#
 <li class="#=menu.items && menu.items.length ? 'treeview' : ''#">
-    <a #=menu.url ? 'href="\#"' : ''#>
+    <a #=menu.url ? 'href="\#'+menu.url+'"' : ''#>
         <i class="fa fa-#=menu.icon ? menu.icon : 'link'#"></i><span>#=menu.text#</span>
         # if(menu.items && menu.items.length) {#
         <i class="fa fa-angle-left pull-right"></i>

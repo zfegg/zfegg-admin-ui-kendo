@@ -1,5 +1,9 @@
 require(['config'], function () {
-    require(['zfegg/app', 'kendo'], function (Application, kendo) {
+    require([
+        'zfegg/app',
+        'kendo',
+        'zfegg/model/oauth'
+    ], function (Application, kendo, Oauth) {
         var App = new Application({
             renderElement: document.body,
             menusDataSource: new kendo.data.DataSource({
@@ -8,7 +12,8 @@ require(['config'], function () {
                         url: './data/menus.json'
                     }
                 }
-            })
+            }),
+            oauth: new Oauth('./data/oauth.json', '123', '456')
         });
         App.run();
         window.App = App;

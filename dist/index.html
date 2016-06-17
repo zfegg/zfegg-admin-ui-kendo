@@ -46,7 +46,7 @@ desired effect
         baseUrl: './assets',
     });
     require(['zfegg/app', 'kendo'], function (Application, kendo) {
-        var App = new Application({
+        var options = {
             renderElement: document.body,
             menusDataSource: new kendo.data.DataSource({
                 transport: {
@@ -54,8 +54,22 @@ desired effect
                         url: './data/menus.json'
                     }
                 }
-            })
-        });
+            }),
+            oauth: {
+                path: './data/oauth.json',
+                clientId : '123',
+                clientSecret: '456'
+            }
+        }, modules = [];
+
+        //<?php $configs['baseUrl'] = $this->serverUrl(rtrim($this->basePath(), '/')); ?>
+
+        /*SET_OPTIONS*/;
+
+        var App = new Application(options);
+
+        /*SET_MODULES*/;
+        App.addModules(modules);
         App.run();
         window.App = App;
     });

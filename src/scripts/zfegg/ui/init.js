@@ -3,10 +3,9 @@ define([
         'kendo',
         'zfegg/config',
         'zfegg/router',
-        '../service/oauth',
         './view/login',
         'admin-lte'
-    ], function ($, kendo, config, router, oauth, LoginView) {
+    ], function ($, kendo, config, router, LoginView) {
     'use strict';
 
     //Ajax 网络状态监听
@@ -28,12 +27,10 @@ define([
     return function (App) {
 
         document.title = config.title;
-
-        App.router.route('/', function () {
-        });
+        var oauth = App.oauth;
 
         App.router.route('/test', function () {
-            console.log(';test');
+            console.log('test');
         });
 
         router.route('/login', function () {

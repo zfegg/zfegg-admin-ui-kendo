@@ -1,10 +1,25 @@
-define(['require', 'kendo', 'jquery', './ui/view/layout', './router', './ui/init'], function (require, kendo, $, LayoutView, router) {
+define([
+    'require',
+    'kendo',
+    'jquery',
+    './ui/view/layout',
+    './router',
+    './model/oauth',
+    './ui/init',
+], function (require, kendo, $, LayoutView, router, Oauth, UiInit) {
    var Application = kendo.Observable.extend({
        layout: null,
        modules: ['zfegg/ui/init'],
        options: {
+           baseUrl: './data',
            menusDataSource: [],
-           renderElement: document.body
+           renderElement: document.body,
+           oauth: {
+               path: '',
+               clientId : '',
+               clientSecret: '',
+               cookiePrefix: ''
+           }
        },
        init: function (options) {
            var self = this;
@@ -15,6 +30,9 @@ define(['require', 'kendo', 'jquery', './ui/view/layout', './router', './ui/init
            this.bind('route', function () {
               self.router.start();
            });
+
+           var oauthOptions = this.options.oauth;
+           this.oauth = new Oauth(this.options.baseUrl + oauthOptions.path, oauthOptions.clientId, oauthOptions.clientSecret, oauthOptions.cookiePrefix);
        },
        addModules: function (modules) {
            this.modules = this.modules.concat(modules);

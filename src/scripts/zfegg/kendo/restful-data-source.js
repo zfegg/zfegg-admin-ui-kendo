@@ -1,4 +1,4 @@
-define('zfegg/kendo/restful-data-source', ['kendo'], function (kendo) {
+define(['kendo'], function (kendo) {
 
     var MIME_JSON = 'application/json';
 
@@ -23,7 +23,7 @@ define('zfegg/kendo/restful-data-source', ['kendo'], function (kendo) {
     var DataSource = kendo.data.DataSource.extend({
         init: function (options) {
             var self = this;
-            var primary = (options.schema.model && options.schema.model.id) || 'id';
+            var primary = (options.schema && options.schema.model && options.schema.model.id) || 'id';
             var extendTransport1 = {read: {url: options.url}, create: {url: options.url}};
             var extendTransport2 = {
                 read: {

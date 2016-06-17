@@ -1,15 +1,18 @@
 var gulp = require("gulp");
-var requirejsOptimize = require("gulp-requirejs-optimize");
-var extend = require("extend");
 var clean = require("gulp-clean");
+var extend = require("extend");
 var concat = require("gulp-concat");
 var rename = require("gulp-rename");
+var replace = require('gulp-replace');
 var cleanCss = require("gulp-clean-css");
 var runSequence = require('run-sequence');
+var requirejsOptimize = require("gulp-requirejs-optimize");
+var sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
     distAssets: 'dist/assets/zfegg-admin-ui',
-    dist: 'dist'
+    dist: 'dist',
+    view: 'view'
 };
 
 var amdConfig = {
@@ -36,6 +39,7 @@ var amdConfig = {
 
 gulp.task("optimize-app", function () {
     return gulp.src('src/scripts/zfegg/app.js')
+        .pipe(sourcemaps.init())
         .pipe(requirejsOptimize(extend({
             useStrict: true,
             include: [
@@ -64,6 +68,7 @@ gulp.task("optimize-app", function () {
             },
         }, amdConfig)))
         .pipe(rename('app.min.js'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(paths.distAssets));
 });
 
@@ -126,6 +131,14 @@ gulp.task("resources", function () {
     return;
 });
 
+gulp.task("phtml", function () {
+    return gulp.src('dist/index.html')
+        .pipe(replace('/*SET_OPTIONS*/', "<?=sprintf('options=$.extend(options, %s);', json_encode($configs))?>"))
+        .pipe(replace('/*SET_MODULES*/', "<?='modules='.json_encode(isset($modules) ? $modules : [])?>"))
+        .pipe(rename('zfegg-admin-ui.phtml'))
+        .pipe(gulp.dest(paths.view));
+});
+
 gulp.task("default", function () {
-    runSequence("clean", "optimize-app", "optimize-vendor", "resources");
+    runSequence("clean", "optimize-app", "optimize-vendor", "resources", "phtml");
 });

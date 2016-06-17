@@ -25,5 +25,10 @@
         "url": "\/zfegg\/admin\/profile"
       }
     ]
+  },
+  {
+    "text": "Test",
+    "index": 0,
+    "url": "\/test"
   }
 ]

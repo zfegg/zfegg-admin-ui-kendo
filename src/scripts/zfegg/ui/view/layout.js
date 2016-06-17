@@ -17,14 +17,16 @@ define('zfegg/ui/view/layout', ['text!./layout.html', 'jquery', 'kendo', '../wid
         error: function (msg) {
             this.trigger('loginError', msg);
         },
+        cachedContents: {},
         renderContent: function (options) {
-            var that = this;
+            var that = this, content;
             options = $.extend({
-                title: null,
-                subTitle: null,
+                title: '',
+                subTitle: '',
                 breadcrumb: [],
-                content: null
+                content: ''
             }, options);
+
             this.element.find('.content-header h1').html(options.title + '<small>' + options.subTitle + '</small>');
             var $ol = this.element.find('.content-header .breadcrumb').empty();
             $.each(options.breadcrumb, function (i, o) {
@@ -32,7 +34,8 @@ define('zfegg/ui/view/layout', ['text!./layout.html', 'jquery', 'kendo', '../wid
             });
 
             var $content = this.element.find('section.content');
-            $content.child().hide();
+            $content.children().detach();
+
             $content.append(options.content);
         }
     });
