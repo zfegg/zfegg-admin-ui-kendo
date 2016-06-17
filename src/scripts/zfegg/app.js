@@ -6,7 +6,8 @@ define([
     './router',
     './model/oauth',
     './ui/init',
-], function (require, kendo, $, LayoutView, router, Oauth, UiInit) {
+    './config',
+], function (require, kendo, $, LayoutView, router, Oauth, UiInit, config) {
    var Application = kendo.Observable.extend({
        layout: null,
        modules: ['zfegg/ui/init'],
@@ -33,6 +34,7 @@ define([
 
            var oauthOptions = this.options.oauth;
            this.oauth = new Oauth(this.options.baseUrl + oauthOptions.path, oauthOptions.clientId, oauthOptions.clientSecret, oauthOptions.cookiePrefix);
+           config.baseUrl = this.options.baseUrl;
        },
        addModules: function (modules) {
            this.modules = this.modules.concat(modules);

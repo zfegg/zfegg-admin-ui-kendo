@@ -114,6 +114,17 @@ gulp.task("resources", function () {
     )
         .pipe(gulp.dest(paths.distAssets + '/fonts'));
 
+    gulp.src(
+        [
+            "libs/kendo/styles/kendo.common.min.css",
+            "libs/kendo/styles/kendo.bootstrap.min.css"
+        ]
+    )
+        .pipe(gulp.dest(paths.distAssets + '/css'));
+
+    gulp.src("libs/kendo/styles/Bootstrap/**/*")
+        .pipe(gulp.dest(paths.distAssets + '/css/Bootstrap'));
+
     //gulp.src([
     //    'node_modules/ionicons/dist/svg/*',
     //]).pipe(gulp.dest(paths.distAssets + '/svg'));
