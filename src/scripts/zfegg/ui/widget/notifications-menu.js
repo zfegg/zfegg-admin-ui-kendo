@@ -1,5 +1,4 @@
-define('zfegg/ui/widget/notifications-menu',
-    ['text!./notifications-menu.html', 'jquery', 'kendo', './base-menu'],
+define(['text!./notifications-menu.html', 'jquery', 'kendo', './base-menu'],
     function (tpl, $, kendo, baseMenu) {
         return baseMenu({
             class: 'notifications-menu',

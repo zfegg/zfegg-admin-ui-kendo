@@ -1,4 +1,4 @@
-define('zfegg/ui/view/login', ['text!./login.html', 'jquery', 'kendo'], function (tpl, $, kendo) {
+define(['text!./login.html', 'jquery', 'kendo'], function (tpl, $, kendo) {
     'use strict';
 
     return kendo.View.extend({

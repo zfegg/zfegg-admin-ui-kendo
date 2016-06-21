@@ -1,5 +1,4 @@
-define('zfegg/ui/widget/sidebar-menu',
-    ['text!./sidebar-menu.html', 'jquery', 'kendo', './base-menu'],
+define(['text!./sidebar-menu.html', 'jquery', 'kendo', './base-menu'],
     function (tpl, $, kendo, baseMenu) {
 
         var ui = kendo.ui,

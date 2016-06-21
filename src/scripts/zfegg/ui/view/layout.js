@@ -1,4 +1,4 @@
-define('zfegg/ui/view/layout', ['text!./layout.html', 'jquery', 'kendo', '../widget/sidebar-menu'], function (tpl, $, kendo) {
+define(['text!./layout.html', 'jquery', 'kendo', '../widget/sidebar-menu'], function (tpl, $, kendo) {
     return kendo.View.extend({
         init: function (options) {
             var that = this;
@@ -9,7 +9,8 @@ define('zfegg/ui/view/layout', ['text!./layout.html', 'jquery', 'kendo', '../wid
                 init: function () {
                     $(document.body).resize();
                 },
-                evalTemplate: true
+                evalTemplate: true,
+                wrap: false
             }, options);
 
             kendo.View.fn.init.call(that, tpl, options);

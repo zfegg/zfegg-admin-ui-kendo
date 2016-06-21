@@ -1,4 +1,4 @@
-define('zfegg/ui/source/menus',
+define(
     [
         'kendo',
         'zfegg/config'

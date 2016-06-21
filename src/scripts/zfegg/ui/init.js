@@ -4,6 +4,7 @@ define([
         'zfegg/config',
         'zfegg/router',
         './view/login',
+        './widget/common-grid',
         'admin-lte'
     ], function ($, kendo, config, router, LoginView) {
     'use strict';
@@ -30,7 +31,25 @@ define([
         var oauth = App.oauth;
 
         App.router.route('/test', function () {
-            console.log('test');
+            var $elm = $('<div></div>');
+            console.log('test', $elm);
+            App.layout.renderContent({
+                title: "Test",
+                content:$elm
+            });
+            $elm.kendoZfeggCommonGrid({
+                columns: [{
+                    field: "name",// create a column bound to the "name" field
+                    title: "Name" // set its title to "Name"
+                }, {
+                    field: "age",// create a column bound to the "age" field
+                    title: "Age" // set its title to "Age"
+                }],
+                dataSource: [ { name: "Jane", age: 30 }, { name: "John", age: 33 }],
+                toolbar: ["create"],
+                fullHeight: true,
+                resizeFullHeight: true
+            });
         });
 
         router.route('/login', function () {

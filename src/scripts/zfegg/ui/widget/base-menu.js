@@ -1,4 +1,4 @@
-define('zfegg/ui/widget/base-menu', ['kendo'], function (kendo) {
+define(['kendo'], function (kendo) {
     return function (config) {
         var ui = kendo.ui,
             Widget = ui.DataBoundWidget;

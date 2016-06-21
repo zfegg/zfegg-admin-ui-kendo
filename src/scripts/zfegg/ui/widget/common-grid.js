@@ -1,16 +1,39 @@
-define('zfegg/ui/widget/common-grid', ['kendo', 'jquery', 'zfegg/ui/notification'], function (kendo, $, notification) {
+define(['kendo', 'jquery', 'zfegg/ui/notification'], function (kendo, $, notification) {
 
 
         var ui = kendo.ui,
             Widget = ui.Grid;
 
-        var Messages = Widget.extend({
+        var ZfeggCommonGrid = Widget.extend({
             init: function(element, options) {
                 var that = this;
                 Widget.fn.init.call(that, element, options);
+
+                if (this.options.resizeFullHeight) {
+                    var windowResizeHandler = function () {
+                        var $body = $('body');
+                        var wrapper = $body.find('.content-wrapper');
+                        var contentWrapperHeight = $(window).height()-$body.find('.main-header').height();
+                        var contentHeaderHeight = wrapper.find('.content-header').outerHeight();
+                        var contentOuterHeight = wrapper.find('.content').outerHeight()-wrapper.find('.content').height();
+                        var height = contentWrapperHeight-contentHeaderHeight-contentOuterHeight-2;//-2 可能因计算四舍五入出现多于高度
+
+                        that.wrapper.height(height);
+                        that.resize(true);
+                    };
+
+                    $(window).bind('resize', windowResizeHandler);
+                    windowResizeHandler();
+                }
             },
             options: {
-                name: 'CommonGrid'
+                name: 'ZfeggCommonGrid',
+                resizeFullHeight: false,
+                pageable: {
+                    refresh: true,
+                    buttonCount: 5
+                },
+
             },
             _toolbar: function () {
                 var that = this,
@@ -57,7 +80,7 @@ define('zfegg/ui/widget/common-grid', ['kendo', 'jquery', 'zfegg/ui/notification
             }
         });
 
-        ui.plugin(Messages);
+        ui.plugin(ZfeggCommonGrid);
 
-        return Messages;
+        return ZfeggCommonGrid;
 });
