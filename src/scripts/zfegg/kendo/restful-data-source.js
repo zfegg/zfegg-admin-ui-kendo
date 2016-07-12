@@ -1,4 +1,4 @@
-define(['kendo'], function (kendo) {
+define(['kendo', 'jquery'], function (kendo, $) {
 
     var MIME_JSON = 'application/json';
 
@@ -60,11 +60,16 @@ define(['kendo'], function (kendo) {
 
                         for (var i in patchData) {
                             var item = patchData[i];
-                            if (typeof item == 'object' || typeof item == 'function') {
+                            if ($.isPlainObject(item) || $.isFunction(item)) {
                                 continue;
                             }
 
                             if (item == pristine[i]) {
+                                delete patchData[i];
+                            }
+
+                            var field = self.options.schema.model.fields[i];
+                            if (!field || field.editable === false) {
                                 delete patchData[i];
                             }
                         }

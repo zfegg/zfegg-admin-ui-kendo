@@ -31,7 +31,13 @@ define(['text!./layout.html', 'jquery', 'kendo', '../widget/sidebar-menu'], func
             this.element.find('.content-header h1').html(options.title + '<small>' + options.subTitle + '</small>');
             var $ol = this.element.find('.content-header .breadcrumb').empty();
             $.each(options.breadcrumb, function (i, o) {
-                $ol.append('<li>'+o.text+'</li>');
+                var isActive = i == (options.breadcrumb.length-1) ? ' class="active"' : '';
+                var icon = i == 0 ? '<i class="fa fa-home"></i>' : '';
+                if (o.url) {
+                    $ol.append('<li'+isActive+'><a href="'+o.url+'">'+icon+o.text+'</a></li>');
+                } else {
+                    $ol.append('<li'+isActive+'>'+icon+o.text+'</li>');
+                }
             });
 
             var $content = this.element.find('section.content');
